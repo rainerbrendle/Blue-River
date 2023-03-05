@@ -33,8 +33,23 @@ Message delivery is done to a Journal data structure.
 
 
 ### Event-Driven
+
+Every received messages represents an event, which immutable and recorded. It represents history and has already happenend.
+
 ### Journal
+
+The Journal table records the events and brings them into a guarnteed timely order per Shard. 
+
+### Processing
+Every Journal entry can be subscribed to and can trigger further actions using an event-codition-action model. Which actions have be triggered and executed jet are maintained in a high-water mark table, which just follows the Journal using processing agents.
+
+### High-Water Mark
+To rember which follow-up actions have been taken yet, we maintain a high-water mark table, which represents a vector-clock implementation 
+
 ### Event-Condition-Action Rules
+
+An action is a next step to be taken and it has to happen within the same transaction as the high-water marks entry is written.
+
 ### Agents, Active Processing and High-Water Mark
 ### Service-API for Snapshot Consistent Data Acccess for Reading
 ### Transactional Guarantees, Fail-Fast/Fail-Over
