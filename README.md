@@ -19,7 +19,7 @@ Every Shard is intended to have more than one replica.
 
 All data are JSON-based data structures, which can be transformed into Go structs and and then API calls using Go's JSON Marshaler and the Go net/http interface. 
 
-### Message-based
+### Message-Based
 
 Creating content for the active database cluster is achieved by sending messages to objects in the shards. Messages are insert, modify and cancel messages, we have an insert-only/append-only model.
 
