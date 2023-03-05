@@ -4,10 +4,10 @@ Peace River Version 2
 
 # Active Database Cluster
 
-> Using Go, Golang-based data models starting from a collectiion of Postgres Database Shards and Schema-Free Database Schemas implementing an Anti-Entropy eventual consistency database cluster
+> Using Go, Golang-based data models with a collectiion of Postgres Database Shards and Schema-Free Database Schemas implementing an Anti-Entropy eventual consistency database cluster
 
-## Basics
-
+###### &copy; 2023 R. Brendle, Port Charlotte, FL
+  
 ### Sharding and the Sharding Code
 We make the assumption that a distributed database is sharded and we are using a general sharding code criteria, which we can represent as an integer number. 
 
@@ -28,7 +28,8 @@ Message delivery is done to a Journal data structure.
 ### Event-Driven
 ### Journal
 ### Event-Condition-Action Rules
+### Agents, Active Processing and High-Water Mark
 ### Service-API for Snapshot Consistent Data Acccess for Reading
 
-&copy; Rainer Brendle
+> 
 
