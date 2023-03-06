@@ -9,11 +9,11 @@ Peace River Version 2
 ###### &copy; 2023 R. Brendle, Port Charlotte, FL
   
 ### Sharding and the Sharding Distribution Code
-We make the assumption that we are building a distributed database in a  sharded manner and we are using a general sharding code criteria, which we can represent as an integer number. 
+We make the assumption that we are building a distributed database in a  sharded manner and we are using a general ShardingCode criteria, which we can represent as an integer number. 
 
 (In business scenarios we may want consider it as "company code" representing a department. but it can be anything, which allows seperating buckets of data, which define a collectiion of "Actors".
 
-We make the assumption that there is a sharding code 0, which represents the control node of the cluster, and which knows about the meanign of the other shards and also about the objects maintained everywhere serving as a directory service for the cluster. All other start with 100.
+We make the assumption that there is a sharding code 0, which represents the control node of the cluster, and which knows about the meaning of the other shards and also about the objects maintained everywhere serving as a directory service for the cluster. All other start with 100.
 
 Every Shard is intended to have more than one replica, 3 at minimum..
 
