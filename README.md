@@ -19,6 +19,8 @@ Actors receive create, modify and cancel messages and have read-only views in an
 
 "Blue Pages" are there to define by GO-based model definition in GO structs. We have messages defining insert oeprations, while we define read operation using a Go-based query language, which can represent all SQL query operations inclusing host variables including TOP or LIKE operations and are using materialized views and corresponding HTTP views.
 
+This allows to have a modern, event-driven busines process management model based on "Swim Lanes", where messages flow from detartments to departments.
+
 ### Sharding and the Sharding Distribution Code
 We make the assumption that we are building a distributed database clustr i n a full eventual consistency manner and we are using a general ShardingCode criteria, which we can represent as an integer number. The integer number can be interpreted as a "company code" then.
 
