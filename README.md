@@ -10,7 +10,7 @@ After experiments using Javascript and SQL or Java, it showed up that using GO a
 
 ###### &copy; 2023 R. Brendle, Port Charlotte, FL
   
-## Actors and Query Language
+## Actors, Messages and Query Language
 We make the assumption that we have a collection of logical "actor" classes, which are represented by object IDs in a timely and spatial distribution. We are sending messages to actors. and can retrieve data from actors as query results on matrialized views of the actor message records.
 
 The spatial distribution is given by a sharding categorry, which can be represented by departments or organizations. We are sending messages to organizations and we can then represent this as a process flow by "swim lanes", if we want to.
