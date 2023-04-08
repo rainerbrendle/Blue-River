@@ -19,7 +19,7 @@ Actors receive create, modify and cancel messages and have read-only views in an
 
 "Blue Pages" are there to define by GO-based model definition in GO structs. We have messages to be send and recieved defining insert[only oeprations, while we define read operation using a Go-based query language, which can represent all SQL query operations inclusing host variables including TOP or LIKE operations and are using materialized views and corresponding HTTP views.
 
-It is basically a Lamda architecture.
+It is basically a Lambda architecture.
 
 This allows to have a modern, event-driven busines process management model based on "Swim Lanes", where messages flow from detartments to departments, while applications are defined via service APIs and workflows may sit on the side and act for assigning users to tasks.
 
@@ -73,7 +73,13 @@ The service A{I for reading need to add a where clause included as a temporal cu
 
 ### Transactional Guarantees, Fail-Fast/Fail-Over
 Since we are recording history, there is no roll-back, there only is a roll-forward model. We always recover from replica and we only move forward in time.
-Errors must be processded using exception handling and can create new workflows as any action can create further workflows.
+Errors must be processded using exception handling and can create new workflows as any action can create further workflows.\
+
+# Colors
+## White Pages, Business Nwtwork
+## Yellow Pages: End Points of Messages, Swim Lanes
+## Blue Pages : Paperwork
+## Red Tape : Rules
 
 > 
 
