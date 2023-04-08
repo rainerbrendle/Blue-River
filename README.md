@@ -76,9 +76,9 @@ Since we are recording history, there is no roll-back, there only is a roll-forw
 Errors must be processded using exception handling and can create new workflows as any action can create further workflows.\
 
 # Colors
-## White Pages: Business Network
-## Yellow Pages: Endpoints of Messages and Services, Swim Lanes
-## Blue Pages : Documents, Paperwork
+## White Pages: Business Network: Companies
+## Yellow Pages: Endpoints of Messages and Services, Swim Lanes: Work Places
+## Blue Pages : Data Structures, Documents, Paperwork
 ## Red Tape : Rules for Validation and Decission Making
 
 > 
