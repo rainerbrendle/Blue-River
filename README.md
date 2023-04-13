@@ -17,13 +17,13 @@ The spatial distribution is given by a sharding category, which can be represent
 
 Actors receive create, modify and cancel messages and have read-only views in an insert-only, append only database pattern. Everything is distributed in a cloud of data plane shards, which again is managed by a control plane database instance having a full understanding of shards and services. We call these Yellow Pages and "BluePages".
 
-e old-fashioned US phone book layout. where we make the analogy, that Yellow Pages are for departments, while the Blue Pages are for the services of the departments. We will need to add "White Pages" for a B2B scenarios and buiness networks)
+In an old-fashioned US phone book layout. where we make the analogy with,  Yellow Pages are for departments, while the Blue Pages are for the services of the departments. We will need to add "White Pages" for a B2B scenarios and business networks.
 
-"Blue Pages" are there to define by GO-based model definition in GO structs. We have messages to be send and recieved defining insert[only oeprations, while we define read operation using a Go-based query language, which can represent all SQL query operations inclusing host variables including TOP or LIKE operations and are using materialized views and corresponding HTTP views.
+"Blue Pages" are there to define by GO-based model definition in GO structs. We have messages to be send and recieved defining insert-only oeprations, while we define read operation using a Go-based query language, which can represent all SQL query operations inclusing host variables including TOP or LIKE operations and are using materialized views and corresponding HTTP views.
 
-It is basically a Lambda architecture.
+It is basically a Lambda architecture. We can define actor methods as closures, where the IRL of an object instance forms the parameter of closure functions.
 
-This allows to have a modern, event-driven busines process management model based on "Swim Lanes", where messages flow from detartments to departments, while applications are defined via service APIs and workflows may sit on the side and act for assigning users to tasks.
+This allows to have a modern, event-driven busines process management model based on "Swim Lanes", where messages flow to workfplaces from detartments to departments, while applications are defined via service APIs and workflows may sit on the side and act for assigning users to tasks.
 
 ### Sharding and the Sharding Distribution Code
 We make the assumption that we are building a distributed database cluster in a full eventual consistency manner and we are using a general 'ShardingCode' criteria, which we can represent as an integer number. The integer number can be interpreted as a "company code" in some cases.
