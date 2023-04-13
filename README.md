@@ -1,4 +1,4 @@
-# PR2
+# Blue River
 
 Peace River Version 2
 
@@ -11,11 +11,13 @@ After experiments using Javascript and SQL or Java, it showed up that using GO a
 ###### &copy; 2023 R. Brendle, Port Charlotte, FL
   
 ## Actors, Messages and Query Language
-We make the assumption that we have a collection of logical "actor" classes, which are represented by object IDs in a timely and spatial distribution. We are sending messages to actors. and can retrieve data from actors as query results on matrialized views of the actor message records.
+We make the assumption that we have a collection of logical "actor" classes, which are represented by object IDs in a timely and spatial distribution. We are sending messages to actors for Insert and Cancel operations. and can retrieve data from actors as query results on matrialized views of the actor message records.
 
-The spatial distribution is given by a sharding categorry, which can be represented by departments or organizations. We are sending messages to organizations and we can then represent this as a process flow by "swim lanes", if we want to.
+The spatial distribution is given by a sharding category, which can be represented by departments oForganizations. We are sending messages to organizations and we can then represent this as a process flow by "swim lanes", if we want to. Swim Lanes represent work places in organizations, where Actors then belong to.
 
-Actors receive create, modify and cancel messages and have read-only views in an insert-only, append only database pattern. Everything is distributed in a cloud of data plane shards, which again is managed by a control plane database instance having a full understanding of shards and services. We call this "Yellow Pages" and "Blue Pages" - taken from a more old-fashioned US phone book layout. where we make the analogy, that Yellow Pages are for departments, while the Blue Pages are for the services of the departments. We will need to add "White Pages" for a B2B scenarios and buiness networks)
+Actors receive create, modify and cancel messages and have read-only views in an insert-only, append only database pattern. Everything is distributed in a cloud of data plane shards, which again is managed by a control plane database instance having a full understanding of shards and services. We call these Yellow Pages and "BluePages".
+
+e old-fashioned US phone book layout. where we make the analogy, that Yellow Pages are for departments, while the Blue Pages are for the services of the departments. We will need to add "White Pages" for a B2B scenarios and buiness networks)
 
 "Blue Pages" are there to define by GO-based model definition in GO structs. We have messages to be send and recieved defining insert[only oeprations, while we define read operation using a Go-based query language, which can represent all SQL query operations inclusing host variables including TOP or LIKE operations and are using materialized views and corresponding HTTP views.
 
