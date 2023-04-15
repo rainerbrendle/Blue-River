@@ -64,17 +64,17 @@ The Journal table records the events and brings them into a guaranteed timely or
 Every Journal entry can be subscribed to and can trigger further actions using an event-codition-action model. Actions create new entries to the outbox.  actions have been triggered and executed are maintained in a high-water mark table, which just follows the Journal using processing agents.
 
 ### High-Water Mark
-To remember which follow-up actions have been taken yet, we maintain a high-water mark table, which represents a vector-clock implementation, It is a table whcih remebers which journal entry was executed las per sender.   Follow up actions are triggered by agent jobs, which scan the datasae shards for pending actions and which can run as GO routines.
+To remember which follow-up actions have been taken yet, we maintain a high-water mark table, which represents a vector-clock implementation, It is a table which remembers which journal entry was executed las per sender.  It also makes sure, that there is only one  vector-time update at a time. Follow up actions are triggered by agent jobs, which scan the datasae shards for pending actions and which can run as GO routines.
 
 ### Event-Condition-Action Rules
 
-An action is a next step to be taken and it has to happen within the same logical transaction as the high-water mars entry is written. Since we have a transactional journal, we can defer actions as long there is no concurrency on the single actor and oepratiosn are in sequence.
+An action is a next step to be taken and it has to happen within the same logical transaction as the high-water mark entry is written. Since we have a transactional journal, we can defer actions as long there is no concurrency on the single actor and operations are in sequence.
 
 ### Agents, Active Processing and High-Water Mark
-The active transformation is done via agent jobs, which wake up, if new messages are to be processed and which sleep again if there is nothing there to be done..
+The active transformation is done via agent jobs, which wake up, if new messages are to be processed and which sleep again if there is nothing there to be done. We can represent the as go-routines.
 
 ### Service-API for Snapshot Consistent Data Acccess for Reading
-The service A{I for reading need to add a where clause included as a temporal cutoff.
+The service A{I for reading needs to add a where clause included as a temporal cutoff. Temporal cutoffs depend on the object type to be be managed. There either is validity date represented by a ISO date or datatime or there is version number, whicch is represented by a major-minor-version scheme (like major-verion/minor-version/revision/build numbers as with software versioning.
 
 ### Transactional Guarantees, Fail-Fast/Fail-Over
 Since we are recording history, there is no roll-back, there only is a roll-forward model. We always recover from replica and we only move forward in time.
