@@ -29,21 +29,21 @@ This allows to have a modern, event-driven busines process management model base
 
 We make the assumption that we are building a distributed database cluster in a full eventual consistency manner and we are using a general 'ShardingCode' criteria, which we can represent as an integer number. The integer number can be interpreted as a "company code" in some cases.
 
-In business scenarios we may want to consider the sharding criteria as "company code" representing a department. but it can be anything, which allows seperating buckets of data, which define a collectiion of "Actors".We can alo add booking periods, if we want to. And we clearly want to add workplaces as subdivissions of detartments.
+In business scenarios we may want to consider the sharding criteria as "company code" representing a department. but it can be anything, which allows seperating buckets of data, which define a collectiion of "Actors". We can also add booking periods, if we want to. And we clearly want to add workplaces as subdivisions of departments.
 
 We make the assumption that there is a sharding code 0, which represents the control node of the cluster, and which knows about the meaning of the other shards and also about the objects maintained everywhere as a directory service for the cluster. All other may start with 100.
 
-Every Shard is intended to have more than one replica, in production 3 at minimum for every shard. We will have a roll-forward model, we do not do roll-backs in general. Only a transaction, which is replicated to a minumum of shards is considered to be complate.
+Every Shard is intended to have more than one replica, in production 3 is the minimum for every shard. We will have a roll-forward model, we do not do roll-backs in general. Only a transaction, which is replicated to a minumum set of of shards is considered to be complate.
 
 All data are JSON-based data structures, which can be transformed into Go structs back an forth and and then API calls using Go's JSON Marshaler and the Go net/http interface. The is a service layer and a data access layer, while the service layer is very thin and only is managing the transformation of database data to network data.
 
 ### Message-Based
 
-Creating content for the active database cluster is achieved by sending messages to objects in the shards. Messages are insert, modify and cancel messages and we have an insert-only/append-only model. On the creation of the messages itself, we can have a more classical CRUD model with PUT and DELETE operations on then preliminary data.
+Creating content for the active database cluster is achieved by sending messages to objects in the shards. Messages are insert, modify and cancel messages and we have an insert-only/append-only model. On the creation of the messages itself, we can have a more classical CRUD model with PUT and DELETE operations on the then preliminary data.
 
 Messages transform into immutable Records and Records transform into materialized views for reading. 
 
-Message delivery can be done via Kafka, but in the end any reliable message delivery protocol can be used.  We also can use Go's channels and go-routinesWe are implementing here the Actor model that MIT was once describin, since we anyhow need an outbox data structure and a receving Journal data structure.
+Message delivery can be done via Kafka, but in the end any reliable message delivery protocol can be used.  We also can use Go's channels and go-routines. We are implementing here the Actor model that MIT was once described. Since we anyhow need an outbox data structure and a receving a Journal data structure, so the transport method can be any.
 
 Messages are JSON-based data structures and have some specific content as sender, receiver and a timely order which allows forming a queue for every Actor.
 
