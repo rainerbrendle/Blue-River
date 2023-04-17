@@ -15,11 +15,11 @@ We make the assumption that we have a collection of logical "actor" classes, whi
 
 The spatial distribution is given by a sharding category, which can be represented by departments oF organizations. We are sending messages to organizations and we can then represent this as a process flow by "swim lanes", if we want to. Swim Lanes represent work places in organizations, where Actors then belong to.
 
-Actors receive create, modify and cancel messages and have read-only views in an insert-only, append only database pattern. Everything is distributed in a cloud of data plane shards, which again is managed by a control plane database instance having a full understanding of shards and services. We call these cluster management structures then "Yellow Pages" and "BluePages".
+Actors receive create, modify and cancel messages and have read-only views in an insert-only, append only database pattern. Everything is distributed within a cloud of data plane shards of database instances, which again is managed by a control plane database instance having a full understanding of the meta data of the shards and services. We call these cluster management structures in the control node then "Yellow Pages" and "BluePages", which is to be replicated to all the data nodes.
 
-In an old-fashioned US phone book layout. where we make this analogy to,  Yellow Pages are for departments and workplaces, while the Blue Pages are for the services of the departments. We will need to add "White Pages" for a B2B scenarios and business networks.
+In an old-fashioned US phone book layout. where we make this analogy to,  Yellow Pages are for departments and workplaces, while the Blue Pages are for the services of the departments. We will need to add "White Pages" for a B2B scenarios and business networks and of course business rules.
 
-"Blue Pages" are there to be defined by GO-based model definition in GO structs. We have messages to be send and received by defining insert-only oeprations, while we define read operations on stable data using a Go-based query language, which can represent all SQL query operations inclusing host variables including TOP or LIKE operations and are using materialized views and corresponding HTTP views. Data become stable because they are produced via a timely ordered journal of "records".
+"Blue Pages" are there to be defined by GO-based model definition in GO structs. We have messages to be send and received by defining insert-only oeprations, while we define read operations on stable data using a Go-based query language, which can represent all SQL query operations including host variables and including TOP or LIKE operations and are using materialized views and corresponding HTTP views. Data become stable because they are produced via a timely ordered journal of "records".
 
 It is basically a Lambda architecture. We can define actor methods as closures, where the URL of an object instance forms the parameter of the closure functions.
 
@@ -27,15 +27,15 @@ This allows to have a modern, event-driven busines process management model base
 
 ### Sharding and the Sharding Distribution Code
 
-We make the assumption that we are building a distributed database cluster in a full eventual consistency manner and we are using a general 'ShardingCode' criteria, which we can represent as an integer number. The integer number can be interpreted as a "company code" in some cases.
+We make the assumption that we are building a distributed database cluster in a full eventual consistency manner and we are using a general 'ShardingCode' criteria, which we can represent as an integer number. The integer number can be interpreted as a "company code" in some cases, but in general it means a department.
 
-In business scenarios we may want to consider the sharding criteria as "company code" representing a department. but it can be anything, which allows seperating buckets of data, which define a collectiion of "Actors". We can also add booking periods, if we want to. And we clearly want to add workplaces as subdivisions of departments.
+In business scenarios we may want to consider the sharding criteria as "company code", but it can be anything, which allows seperating buckets of data, which define a collectiion of "Actors". We can also add booking periods, if we want to. And we clearly want to add workplaces as subdivisions of departments.
 
 We make the assumption that there is a sharding code "0", which represents the control node of the cluster, and which knows about the meaning of the other shards and also about the objects maintained everywhere as a directory service for the cluster. All other may start with 100. THe control node then connects to a RAFT-based etcd database for fail-over management.
 
 Every Shard is intended to have more than one replica, in production 3 is the minimum for every shard. We will have a roll-forward model, we do not do roll-backs in general regarding records. Only a transaction, which is replicated to a minumum set of at least two shards is considered to be complete.
 
-All data are JSON-based data structures, which can be transformed into Go structs back an forth and and then API calls using Go's JSON Marshaler and the Go net/http interface. The is a service layer and a data access layer, while the service layer is very thin and only is managing the transformation of database data to network data.
+All data are JSON-based data structures, which can be transformed into Go structs back an forth and and  API calls using Go's JSON Marshaler and the Go net/http interface. The is a service layer and a data access layer, while the service layer is very thin and only is managing the transformation of database data to network data and the routing of requests to the shards.
 
 ### Message-Based
 
@@ -43,13 +43,13 @@ Creating content for the active database cluster is achieved by sending messages
 
 Messages transform into immutable Records and Records transform into materialized views for reading. 
 
-Message delivery can be done via Kafka, but in the end any reliable message delivery protocol can be used.  We also can use Go's channels and go-routines. We are implementing here the Actor model that MIT had once described. Since we anyhow need an outbox data structure and a receving a Journal data structure, so the transport method can be any.
+Message delivery can be done via Kafka, but in the end any reliable message delivery protocol can be used.  We also can use Go's channels and go-routines. We are implementing here mostly the Actor model that MIT had once described. Since we anyhow need an outbox data structure and a receving a Journal data structure, so the transport method can be any.
 
 Messages are JSON-based data structures and have some specific content as sender, receiver and a timely order which allows forming a queue for every Actor class.
 
 The sharding code and the timely order together creates a Lamport time stamp for every message.
 
-Message delivery is done to a Journal data structure. When the message is received it can create follow-up action in a stable and consistent manner with snapshot consitency,
+Message delivery is done to a Journal data structure. When the message is received it can create follow-up actions in a stable and consistent manner with snapshot consitency,
 
 
 ### Event-Driven
@@ -58,13 +58,13 @@ Every received messages represents an event, which is immutable and recorded. It
 
 ### Journal and Outbox
 
-The Journal table records the events and brings them into a guaranteed timely order per Shard. THe outbox records requests and notifications to be send and delivered again in guarnteed timely order. Journal alwyas runs behint the outbox, we have a roll-forward model for every receiver.
+The Journal table records the events and brings them into a guaranteed timely order per Shard. The outbox records requests and notifications to be send and delivered again in guaranteed timely order. The Journal always runs behint the outbox, we have a roll-forward model for every receiver.
 
 ### Processing
 Every Journal entry can be subscribed to and can trigger further actions using an event-codition-action model. Actions create new entries to the outbox.  actions have been triggered and executed are maintained in a high-water mark table, which just follows the Journal using processing agents.
 
 ### High-Water Mark
-To remember which follow-up actions have been taken yet, we maintain a high-water mark table, which represents a vector-clock implementation, It is a table which remembers which journal entry was executed las per sender.  It also makes sure, that there is only one  vector-time update at a time. Follow up actions are triggered by agent jobs, which scan the datasae shards for pending actions and which can run as GO routines.
+To remember which follow-up actions have been taken yet, we maintain a high-water mark table, which represents a vector-clock implementation, It is a table which remembers which journal entry was executed already per sender.  It also makes sure, that there is only one vector-time update at a time. Follow up actions are triggered by agent jobs, which scan the database shards for pending actions and which can run as GO routines.
 
 ### Event-Condition-Action Rules
 
