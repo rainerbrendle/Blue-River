@@ -21,7 +21,7 @@ In an old-fashioned US phone book layout. where we make this analogy to,  Yellow
 
 "Blue Pages" are there to be defined by GO-based model definition in GO structs. We have messages to be send and received by defining insert-only oeprations, while we define read operations on stable data using a Go-based query language, which can represent all SQL query operations including host variables and including TOP or LIKE operations and are using materialized views and corresponding HTTP views. Data become stable because they are produced via a timely ordered journal of "records".
 
-It is basically a Lambda architecture. We can define actor methods as closures, where the URL of an object instance forms the parameter of the closure functions.
+It is basically an aggresive Lambda architecture. We can define actor methods as closures, where the URL of an object instance forms the parameter of the closure functions.
 
 This allows to have a modern, event-driven busines process management model based on "Swim Lanes", where messages flow to workplaces from departments to departments, while applications are defined via service APIs and workflows may sit on the side and act for assigning users to tasks.
 
