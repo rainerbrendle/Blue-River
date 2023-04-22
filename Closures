@@ -3,6 +3,23 @@
 to be able to use GO closures effectively and without generating code, we make the assumption,
 that a basic URL for an Actor object has several parameters, which result in different return values for the insert/read/cancel funtion on every opbject.
 
+We have a set of APIs and obejects to operate on.
+
+## Workitems
+
+## Requests and Notifications
+
+## Records and Journal
+
+## Master Data Versions and Ledgers
+
+## Inventory
+
+## Statements
+
+## Planing
+
+
 We make a difference in the API if we rad meta data about the structure, access an Actor object instance and have differen operations - all in one API definition.
 
 Every Actor object instance is given by a spatial and temporal coordinate - a Lamport time.
