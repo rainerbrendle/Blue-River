@@ -70,7 +70,7 @@ Every received messages represents an event, which is immutable and recorded. It
 
 ### Journal and Outbox
 
-The Journal table records the events and brings them into a guaranteed timely order per Shard. The outbox records requests and notifications to be send and delivered again in guaranteed timely order. The Journal always runs behint the outbox, we have a roll-forward model for every receiver.
+The Journal table records the events and brings them into a guaranteed timely order per Shard. The outbox records requests and notifications to be send to be send and delivered again in guaranteed timely order. The Journal always runs behint the outbox, we have a roll-forward model for every receiver, which we can represent using Vector-Time. 
 
 ### Processing
 Every Journal entry can be subscribed to and can trigger further actions using an event-codition-action model. Actions create new entries to the outbox.  actions have been triggered and executed are maintained in a high-water mark table, which just follows the Journal using processing agents.
