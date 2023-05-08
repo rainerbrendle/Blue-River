@@ -14,16 +14,16 @@ After experiments using Javascript and SQL or Java, it showed up that using GO a
 We make the assumption that we have a collection of logical "actor" classes, which are represented by object IDs in a timely and spatial distribution. We are sending messages to actors for Insert and Cancel operations. and can retrieve data from actors as stable query results on matrialized views of the actor message records.
 
 ### Messages
-Messages are preliminary data. They are just wishes of information to be recorded. Besides being neccessary to be transported there is no necessity to keep them for along time. They can be persisted also just as a in-memory state in an application server. as long as we can give it a REST interface. Which we do, when we have the application server holding the state in a container and we can address it. A fil-over strategy for preliminary data is to throw them away and restart the aplication anyhow.
+Messages are preliminary data. They are just wishes of information to be recorded. Besides being neccessary to be transported there is no necessity to keep them for along time. Instead they can be persisted also just as an in-memory state in an application server-  as long as we can give it a REST interface. Which we do, when we have the application server holding the state in a container and we can address it. A fil-over strategy for preliminary data is to throw them away and restart the aplication anyhow. A container for a GO application server can do so.
 
 ### Actors
-Actors can be defined as objects being maintained in a Journal. A Journal is a peristent record of the messages being received.
+Actors itself can be defined as objects being maintained in a Journal. We are sendign messages to Actors and we record them there. A Journal is a peristent record of the messages being received.
 
 ### Queries
-Real (perisitent) queries must operated on stable, immutable data. We generated immutable data out of the Actors' Journal using views on this.
+Real (perisitent) queries must be operated on stable, immutable data. We generate immutable data out of the Actors' Journal using views on this.
 
 ### Sharding
-The spatial distribution is given by a sharding category, which can be represented by departments oF organizations. We are sending messages to organizations and we can then represent this as a process flow by "swim lanes", if we want to. Swim Lanes represent work places in organizations, where Actors then belong to.
+The spatial distribution is given by a sharding category, which can be represented by departments oF organizations. We are sending messages to organizations and we can then represent this as a process flow by "swim lanes", if we want to. Swim Lanes represent work places in organizations, where Actors then belong to. THe end points of Swim Lanes can represent "work places" in an organisation. 
 
 Actors receive create-, modify- and cancel-messages of requests and notifcations and then have read-only views in an insert-only, append only database pattern. Everything is distributed within a cloud of data plane shards of database instances, which again is managed by a control plane database instance having a full understanding of the meta data of the shards and services. We call these cluster management structures in the control node then "Yellow Pages" and "BluePages", which is to be replicated to all the data nodes.
 
