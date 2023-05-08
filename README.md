@@ -22,9 +22,10 @@ Actors can be defined as objects being maintained in a Journal. A Journal is a p
 ### Queries
 Real (perisitent) queries must operated on stable, immutable data. We generated immutable data out of the Actors' Journal using views on this.
 
+### Sharding
 The spatial distribution is given by a sharding category, which can be represented by departments oF organizations. We are sending messages to organizations and we can then represent this as a process flow by "swim lanes", if we want to. Swim Lanes represent work places in organizations, where Actors then belong to.
 
-Actors receive create, modify and cancel messages and have read-only views in an insert-only, append only database pattern. Everything is distributed within a cloud of data plane shards of database instances, which again is managed by a control plane database instance having a full understanding of the meta data of the shards and services. We call these cluster management structures in the control node then "Yellow Pages" and "BluePages", which is to be replicated to all the data nodes.
+Actors receive create-, modify- and cancel-messages of requests and notifcations and then have read-only views in an insert-only, append only database pattern. Everything is distributed within a cloud of data plane shards of database instances, which again is managed by a control plane database instance having a full understanding of the meta data of the shards and services. We call these cluster management structures in the control node then "Yellow Pages" and "BluePages", which is to be replicated to all the data nodes.
 
 In an old-fashioned US phone book layout. where we make this analogy to,  Yellow Pages are for departments and workplaces, while the Blue Pages are for the services of the departments. We will need to add "White Pages" for a B2B scenarios and business networks and of course business rules.
 
