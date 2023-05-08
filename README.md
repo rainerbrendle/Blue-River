@@ -17,7 +17,7 @@ We make the assumption that we have a collection of logical "actor" classes, whi
 Messages are preliminary data. They are just wishes of information to becreated and eventually  recorded. Besides being neccessary to be transported there is no necessity to keep message states for along time. Instead they can be persisted also just as an in-memory state in an application server-  as long as we can give it a REST interface. Which we do, when we have the application server holding the state in a docker container and we can address it. A fail-over strategy for preliminary data is to throw them away and restart the aplication from a save point. A container for a GO application server can do so.
 
 ### Actors
-Actors itself can be defined as objects being maintained in a persistent Journal. We are sending messages to Actors and we record the messages there. A Journal is a peristent record of the messages being received.
+Actors itself can be defined as objects being maintained in a persistent "Journal". We are sending messages to Actors and we record the messages there. A Journal is a peristent record of the messages being received.
 
 ### Queries
 Real perisitent queries must be operated on stable, immutable data. We generate immutable data out of the Actors' Journal using views on this.
