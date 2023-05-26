@@ -14,34 +14,38 @@ After experiments using Javascript and SQL or Java, it showed up that using GO a
 We make the assumption that we have a collection of logical "actor" classes, which are represented by object IDs in a timely and spatial distribution. We are sending messages to actors for Insert and Cancel operations. and can retrieve data from actors as stable query results on matrialized views of the actor message records. "Actors' can be anything including any business document structures like orders, notes, but also master and configuration data. 
 
 ### Messages
-Messages are preliminary data. They are just wishes of information to becreated and eventually  recorded. Besides being neccessary to be transported there is no necessity to keep message states for along time. Instead they can be persisted also just as an in-memory state in an application server-  as long as we can give it a REST interface. Which we do, when we have the application server holding the state in a docker container and we can address it. A fail-over strategy for preliminary data is to throw them away and restart the aplication from a save point. A container for a GO application server can do so.
+Messages are the preliminary data. They represent just wishes of information to be created and eventually  recorded. We have an eventual-conistency architecture. 
+
+Besides being neccessary to be transported there is no necessity to keep message states for very along time. Instead they can be persisted also just as an in-memory state in an application server - as long as we can give it a REST interface. Which we do, when we have the application server holding the state in a docker container and we can address it. A fail-over strategy for preliminary data is to throw them away and restart the aplication from a save point. A container for a GO application server can do sO, We can have peristency, but we do not have to.
 
 ### Actors
-Actors itself can be defined as objects being maintained in a persistent "Journal". We are sending messages to Actors and we record the messages there. A Journal is a peristent record of the messages being received.
+Actors itself can be defined as objects being maintained in a persistent "Journal" of recorded messages. We are sending messages to Actors and we record the messages there. A Journal is a peristent record of the messages being received. From the "Journal" any kind of projection can be achieved.
 
 ### Queries
-Real perisitent queries must be operated on stable, immutable data. We generate immutable data out of the Actors' Journal using views on this.
+Real perisitent queries must be operated on stable, immutable data. We generate immutable data out of the Actors' Journal using views on this - basically as "materialized views"
 
 ### Sharding
 The spatial distribution is given by a sharding category, which can be represented by departments oF organizations. We are sending messages to organizations and we can then represent this as a process flow by "swim lanes", if we want to. Swim Lanes represent work places in organizations, where Actors then belong to. The end points of Swim Lanes can represent "work places" in an organisation. 
 
 Actors receive create-, modify- and cancel-messages of requests and notifcations and then have read-only views in an insert-only, append only database pattern. Everything is distributed within a cloud of data plane-oriented shards of database instances, which again is managed by a control plane-centric shard as distributed and mutiple  database instance having a full understanding of the meta data of the shards and services. Fail-over on thsi level acn be done via the RAft algorithm. The control plane instnaces must exist in a odd number of replica.
 
-We call these cluster management structures in the control node then "Yellow Pages" and "BluePages". Theyare is to be replicated to all the data nodes, since they are needed anywhere.
+We call these cluster management structures in the control node then "Yellow Pages" and "Blue Pages". They are  to be replicated to all the data nodes, since they are needed anywhere.
 
-In an old-fashioned US phone book layout-  where we make this analogy to -  Yellow Pages are for departments and workplaces, while the Blue Pages are for the services of the departments. We will need to add "White Pages" for B2B scenarios and business networks and of course business rules.
+In an old-fashioned US phone book layout - where we make this analogy to -  Yellow Pages are for departments and workplaces, while the Blue Pages are for the services of the departments. We will need to add "White Pages" for B2B scenarios and business networks and of course business rules.
 
 "Blue Pages" are there to be defined by GO-based model definition in GO structs. We have messages to be send and received by defining insert-only operations, while we define read operations on stable data using a Go-based query language, which can represent all SQL query operations including host variables and including TOP or LIKE operations and are using materialized views and corresponding HTTP views. Data become stable because they are produced via a timely ordered journal of "records".
 
-It is basically an aggresive Lambda architecture. We can define actor operations as closures, where the URL of an object instance forms the parameter of the closure functions.
+It is basically an aggresive Lambda architecture bsed on stateless services without side-effects. We can define actor operations as closures, where the URL of an object instance forms the parameter of the closure functions.
 
 This allows having a modern, event-driven busines process management model based on "Swim Lanes", where messages flow to workplaces from departments to departments, while applications are defined via service APIs and workflows may sit on the side and act for assigning users to tasks.
 
 ### Sharding and the Sharding Distribution Code
 
-We make the assumption that we are building a distributed database cluster in a full eventual consistency manner and we are using a general 'ShardingCode' criteria, which we can represent as an integer number. The integer number can be interpreted as a "company code" in some cases, but in general it means a department for final data. Preliminary data we can represent by negative numbers instead.
+We make the assumption that we are building a distributed database cluster in a full eventual consistency manner and we are using a general 'Sharding Code' criteria, which we can represent as an integer number. The integer number can be interpreted as a "company code" in some cases, but in general it can mean a department for final data. Preliminary data we can represent by negative numbers instead.
 
-In business scenarios we may want to consider the sharding criteria a sa  "company code", the smalest unit of an organization, which is able to make own decissionsin corporate law, but it can be anything, which allows seperating buckets of data, which define a collectiion of "Actors". We can also add booking periods, if we want to. And we clearly want to add workplaces as subdivisions of departments.
+A Department then conistes as a series of work places, where we can use a data flow-based description as we have it with "swim lanes". 
+
+In business scenarios we may want to consider the sharding criteria as a  "company code", the smalest unit of an organization, which is able to make own decissionsin corporate law, but it can be anything, which allows seperating buckets of data, which define a collectiion of "Actors". We can also add booking periods, if we want to. And we clearly want to add workplaces as subdivisions of departments.
 
 We make the assumption that there is a sharding code "0", which represents the control node of the cluster, and which knows about the meaning of the other shards and also about the objects maintained everywhere as a directory service for the cluster. All other may start with 100. THe control node then connects to a RAFT-based etcd database for fail-over management.
 
