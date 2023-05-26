@@ -9,7 +9,10 @@ After experiments using Javascript and SQL or Java, it showed up that using GO a
 > Using Go, Golang-based data models with a collectiion of Postgres Database Shards and Schema-Free Database Schemas implementing an Anti-Entropy eventual consistency database cluster may be the best option. Especially if you can add CitusDB's column store for PostgreSQL or Apache Druid for Analytics as materialized views, which you can, if you have an event-driven Event-Condition-Action model of an Active Database cluster.  
 
 ###### &copy; 2023 R. Brendle, Port Charlotte, FL
-  
+
+## Loose Coupling
+We have ayynchronous messsages for transactions and APIs for reading, which are basically JSON or JSON-like structures, but form a network protocol between UIs and components.
+
 ## Actors, Messages and Query Language
 We make the assumption that we have a collection of logical "actor" classes, which are represented by object IDs in a timely and spatial distribution. We are sending messages to actors for Insert and Cancel operations. and can retrieve data from actors as stable query results on matrialized views of the actor message records. "Actors' can be anything including any business document structures like orders, notes, but also master and configuration data. 
 
